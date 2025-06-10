@@ -54,6 +54,8 @@ public class ListaCatalogos extends LecturaAccion
             case 3:
                 System.out.println( "No implementado" );
                 break;
+            case 4:
+
         }
         ejecutable.setFlag( true );
         ejecutable.run( );

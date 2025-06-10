@@ -2,27 +2,31 @@ package org.ramosmiguel.pixup.model;
 
 public class Municipio extends Catalogo
 {
-    private String nombre;
+    private String municipio;
+    private Integer id_estado;
 
-    public Municipio()
-    {
+    public Municipio() {
     }
 
-    public String getNombre()
-    {
-        return nombre;
+    public String getMunicipio() {
+        return municipio;
+    }
+    public Integer getId_estado() {
+        return id_estado;
     }
 
-    public void setNombre(String nombre)
-    {
-        this.nombre = nombre;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
+    }
+    public void setId_estado(Integer id_estado) {
+        this.id_estado = id_estado;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Municipio{" +
-                "nombre='" + nombre + '\'' +
+                "municipio='" + municipio + '\'' +
+                ", id_estado=" + id_estado +
                 ", id=" + id +
                 '}';
     }

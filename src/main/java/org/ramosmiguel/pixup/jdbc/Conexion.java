@@ -1,106 +1,67 @@
 package org.ramosmiguel.pixup.jdbc;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+public abstract class Conexion<T> {
 
-public abstract class Conexion<T>
-{
-    /**
-     * @author gerdoc
-     */
+    private static final String USER = "root";                // Cambia si usas otro usuario
+    private static final String PASSWORD = "ManthonyZ1#3";    // Asegúrate que sea la correcta
+    private static final String DB = "pixup";
+    private static final String SERVER = "127.0.0.1";
+    private static final String URL = "jdbc:mysql://" + SERVER + "/" + DB + "?useSSL=false&serverTimezone=UTC" + "&allowPublicKeyRetrieval=true";
 
-    public static String user = "root";
-    public static String password = "1234";
-    public static String db = "pixup";
-    public static String server = "127.0.0.1";
     protected Connection connection;
 
-    public Conexion()
-    {
-    }
+    public Conexion() {}
 
-    public boolean testDriver()
-    {
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+    protected boolean testDriver() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return true;
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC Driver no encontrado.");
+            e.printStackTrace();
+            return false;
         }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        return false;
     }
 
-    private boolean loadConnection(String user, String password, String db, String server)
-    {
-        String url = null;
-        if (user == null || password == null || db == null || server == null)
-        {
-            return false;
-        }
-        if ("".equals(user) || "".equals(password) || "".equals(db) || "".equals(server))
-        {
-            return false;
-        }
-        url = String.format("jdbc:mysql://%s/%s?user=%s&password=%s", server, db, user, password);
-        try
-        {
-            if (!testDriver( ) )
-            {
+    protected boolean loadConnection() {
+        try {
+            if (!testDriver()) {
                 return false;
             }
-            connection = DriverManager.getConnection(url);
-            return connection != null;
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean openConnection()
-    {
-        try
-        {
-            if( connection == null )
-            {
-                if( !loadConnection( user, password, db, server ) )
-                {
-                    return false;
-                }
-            }
-            return connection.isClosed();
-        }
-        catch (SQLException e)
-        {
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error al conectar a la base de datos:");
+            e.printStackTrace();
             return false;
         }
     }
 
-    public void closeConnection( )
-    {
-        try
-        {
-            if (connection == null)
-            {
-                return;
+    public boolean openConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                return loadConnection();
             }
-            if (connection.isClosed())
-            {
-                return;
-            }
-            connection.close();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error al verificar la conexión:");
+            e.printStackTrace();
+            return false;
         }
     }
 
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión:");
+            e.printStackTrace();
+        }
+    }
 }

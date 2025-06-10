@@ -21,36 +21,35 @@ public class Consola extends LecturaAccion
     }
 
     @Override
-    public void despliegaMenu()
-    {
-        System.out.println("Seleccione una opcion:");
-        System.out.println("1.-Catálogos");
-        System.out.println("2.-Salir");
+    public void despliegaMenu() {
+        System.out.println("Seleccione una opción:");
+        System.out.println("1.- Registrar Usuario");
+        System.out.println("2.- Agregar Disco");
+        System.out.println("3.- Salir");
     }
 
     @Override
-    public int valorMinMenu()
-    {
-        return 1;
-    }
+    public int valorMinMenu() { return 1; }
+    @Override
+    public int valorMaxMenu() { return 3; }
 
     @Override
-    public int valorMaxMenu()
-    {
-        return 2;
-    }
-
-    @Override
-    public void procesaOpcion()
-    {
+    public void procesaOpcion() {
         Ejecutable ejecutable = null;
-        System.out.println("Opcion: " + opcion);
-        if(opcion==1)
-        {
-            ejecutable = ListaCatalogos.getInstance( );
+        switch (opcion) {
+            case 1:
+                ejecutable = MenuRegistrarUsuario.getInstance();
+                break;
+            case 2:
+                ejecutable = MenuAgregarDisco.getInstance();
+                break;
+            case 3:
+                return;  // sale de la consola
+            default:
+                System.out.println("Opción inválida");
+                return;
         }
-        ejecutable.setFlag( true );
-        ejecutable.run( );
+        ejecutable.setFlag(true);
+        ejecutable.run();
     }
-
 }

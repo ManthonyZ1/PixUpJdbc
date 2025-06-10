@@ -23,6 +23,10 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion
         return list.isEmpty();
     }
 
+    public List<T> getList(){
+        return list;
+    }
+
     public void print( )
     {
         if( isListEmpty( ) )
@@ -58,7 +62,11 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion
         {
             System.out.println( "Ingrese el id del elemento a editar" );
             print( );
-            t = list.stream().filter( e -> e.getId().equals( ReadUtil.readInt( ) ) ).findFirst().orElse( null );
+            int id = ReadUtil.readInt();
+            t = list.stream()
+                    .filter(e -> e.getId() == id)
+                    .findFirst()
+                    .orElse(null);
             if( t == null )
             {
                 System.out.println( "Id incorrecto, intentelo nuevamente" );
@@ -84,7 +92,11 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion
         {
             System.out.println( "Ingrese el id del elemento a borrar" );
             print( );
-            t = list.stream().filter( e -> e.getId().equals( ReadUtil.readInt( ) ) ).findFirst().orElse( null );
+            int id = ReadUtil.readInt();
+            t = list.stream()
+                    .filter(e -> e.getId() == id)
+                    .findFirst()
+                    .orElse(null);
             if( t==null )
             {
                 System.out.println( "Id incorrecto, intentelo nuevamente" );
@@ -119,15 +131,18 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion
     }
 
     @Override
-    public void despliegaMenu()
-    {
-        System.out.println("Menú de Estado:");
-        System.out.println("Seleccione una opcion:");
-        System.out.println("1.-Agregar");
-        System.out.println("2.-Editar");
-        System.out.println("3.-Borrar");
-        System.out.println("4.-Imprimir");
-        System.out.println("5.-Salir");
+    public void despliegaMenu() {
+        // toma "EstadoCatalogo" → quita "Catalogo" → queda "Estado"
+        String nombre = this.getClass()
+                .getSimpleName()
+                .replace("Catalogo", "");
+        System.out.println("Menú de " + nombre + ":");
+        System.out.println("Seleccione una opción:");
+        System.out.println("1.- Agregar");
+        System.out.println("2.- Editar");
+        System.out.println("3.- Borrar");
+        System.out.println("4.- Consultar");
+        System.out.println("5.- Salir");
     }
 
     @Override
