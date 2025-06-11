@@ -1,6 +1,6 @@
 package org.ramosmiguel.pixup.jdbc.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.ramosmiguel.pixup.jdbc.ArtistaJdbc;
 import org.ramosmiguel.pixup.model.Artista;
 
@@ -8,74 +8,74 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class ArtistaJdbcImplTest {
+
+    private ArtistaJdbc dao;
+    private Artista artista;
+
+    @BeforeEach
+    void setUp() {
+        dao = ArtistaJdbcImpl.getInstance();
+        artista = new Artista();
+        artista.setNombre("Artista Temporal");
+        dao.save(artista); // Guardamos antes de cada test
+    }
+
+    @AfterEach
+    void tearDown() {
+        dao.delete(artista); // Eliminamos después de cada test
+    }
 
     @Test
     void getInstance() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
-        assertNotNull(dao);
+        ArtistaJdbc instancia = ArtistaJdbcImpl.getInstance();
+        assertNotNull(instancia);
     }
 
     @Test
     void findAll() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
         List<Artista> artistas = dao.findAll();
         assertNotNull(artistas);
-        assertTrue(artistas.size() >= 0);
-        artistas.forEach(System.out::println);
+        assertFalse(artistas.isEmpty()); // Porque ya insertamos uno en setUp
     }
 
     @Test
     void save() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
-        Artista artista = new Artista();
-
-        artista.setId(1); // ID fijo manual
-        artista.setNombre("Artista Manual");
-
-        boolean result = dao.save(artista);
-        assertTrue(result);
-
-        System.out.println("Artista guardado: " + artista);
+        Artista nuevo = new Artista();
+        nuevo.setNombre("Artista Save Test");
+        boolean resultado = dao.save(nuevo);
+        assertTrue(resultado);
+        assertNotNull(nuevo.getId());
+        dao.delete(nuevo); // Limpieza manual
     }
 
     @Test
     void update() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
-        Artista artista = new Artista();
-
-        artista.setId(1); // ID que se usó en el test `save`
         artista.setNombre("Artista Modificado");
-
         boolean result = dao.update(artista);
         assertTrue(result);
 
-        System.out.println("Artista actualizado: " + artista);
-    }
-
-    @Test
-    void delete() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
-        Artista artista = new Artista();
-
-        artista.setId(4); // ID que se usó en los tests anteriores
-
-        boolean result = dao.delete(artista);
-        assertTrue(result);
-
-        System.out.println("Artista eliminado con ID: " + artista.getId());
+        Artista modificado = dao.findById(artista.getId());
+        assertEquals("Artista Modificado", modificado.getNombre());
     }
 
     @Test
     void findById() {
-        ArtistaJdbc dao = ArtistaJdbcImpl.getInstance();
+        Artista encontrado = dao.findById(artista.getId());
+        assertNotNull(encontrado);
+        assertEquals(artista.getNombre(), encontrado.getNombre());
+    }
 
-        Artista artista = dao.findById(2); // El ID debe existir si se ejecutó `save` previamente
+    @Test
+    void delete() {
+        Artista aBorrar = new Artista();
+        aBorrar.setNombre("Artista Borrar Test");
+        dao.save(aBorrar);
+        boolean eliminado = dao.delete(aBorrar);
+        assertTrue(eliminado);
 
-        assertNotNull(artista);
-        assertEquals(2, artista.getId());
-        assertNotNull(artista.getNombre());
-
-        System.out.println("Artista encontrado: " + artista);
+        Artista resultado = dao.findById(aBorrar.getId());
+        assertNull(resultado);
     }
 }

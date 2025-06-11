@@ -73,30 +73,37 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
 
     @Override
     public boolean save(Cancion cancion) {
-
         PreparedStatement preparedStatement = null;
+        ResultSet generatedKeys = null;
         String query = "INSERT INTO TBL_CANCION (TITULO, DURACION, TBL_DISCO_ID) VALUES (?, ?, ?)";
         int res = 0;
 
         try {
-            if (!openConnection())
-            {
+            if (!openConnection()) {
                 System.out.println("Error en conexión");
                 return false;
             }
 
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, cancion.getTitulo());
             preparedStatement.setString(2, cancion.getDuracion());
             preparedStatement.setInt(3, cancion.getDisco_id());
+
             res = preparedStatement.executeUpdate();
+
+            if (res == 1) {
+                generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    cancion.setId(generatedKeys.getInt(1)); // ✅ Aquí se asigna el ID al objeto
+                }
+            }
+
+            if (generatedKeys != null) generatedKeys.close();
             preparedStatement.close();
             closeConnection();
             return res == 1;
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

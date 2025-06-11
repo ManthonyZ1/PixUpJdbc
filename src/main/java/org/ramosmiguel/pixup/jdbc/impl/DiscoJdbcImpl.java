@@ -69,7 +69,8 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc {
     @Override
     public boolean save(Disco disco) {
         PreparedStatement preparedStatement = null;
-        String query = "INSERT INTO TBL_DISCO (titulo, precio, existencia, descuento, fecha_lanzamiento, imagen, tbl_artista_id, tbl_disquera_id, tbl_genero_musical_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        ResultSet generatedKeys = null;
+        String query = "INSERT INTO TBL_DISCO (TITULO, PRECIO, EXISTENCIA, DESCUENTO, FECHA_LANZAMIENTO, IMAGEN, TBL_ARTISTA_ID, TBL_DISQUERA_ID, TBL_GENERO_MUSICAL_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int res = 0;
 
         try {
@@ -78,7 +79,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc {
                 return false;
             }
 
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, disco.getTitulo());
             preparedStatement.setFloat(2, disco.getPrecio());
             preparedStatement.setInt(3, disco.getExistencia());
@@ -90,6 +91,15 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc {
             preparedStatement.setInt(9, disco.getGeneroMusical_id());
 
             res = preparedStatement.executeUpdate();
+
+            if (res == 1) {
+                generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    disco.setId(generatedKeys.getInt(1));
+                }
+            }
+
+            if (generatedKeys != null) generatedKeys.close();
             preparedStatement.close();
             closeConnection();
             return res == 1;

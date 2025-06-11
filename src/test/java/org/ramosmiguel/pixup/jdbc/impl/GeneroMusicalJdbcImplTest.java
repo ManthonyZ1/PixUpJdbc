@@ -1,6 +1,6 @@
 package org.ramosmiguel.pixup.jdbc.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.ramosmiguel.pixup.jdbc.GeneroMusicalJdbc;
 import org.ramosmiguel.pixup.model.GeneroMusical;
 
@@ -8,72 +8,81 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class GeneroMusicalJdbcImplTest {
+
+    private GeneroMusicalJdbc dao;
+    private GeneroMusical genero;
+
+    @BeforeEach
+    void setUp() {
+        dao = GeneroMusicalJdbcImpl.getInstance();
+        genero = new GeneroMusical();
+
+        genero.setId((int) (System.currentTimeMillis() % 100000)); // ID único temporal
+        genero.setDescripcion("Género de prueba");
+
+        dao.save(genero);
+    }
+
+    @AfterEach
+    void tearDown() {
+        dao.delete(genero);
+    }
 
     @Test
     void getInstance() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
-        assertNotNull(dao);
+        assertNotNull(GeneroMusicalJdbcImpl.getInstance());
     }
 
     @Test
     void findAll() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
         List<GeneroMusical> generos = dao.findAll();
         assertNotNull(generos);
-        assertTrue(generos.size() >= 0);
-        generos.forEach(System.out::println);
+        assertFalse(generos.isEmpty());
     }
 
     @Test
     void save() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
-        GeneroMusical genero = new GeneroMusical();
+        GeneroMusical nuevo = new GeneroMusical();
+        nuevo.setId((int) (System.nanoTime() % 100000)); // ID temporal aleatorio
+        nuevo.setDescripcion("Nuevo género");
 
-        genero.setId(3000); // ID manual
-        genero.setDescripcion("Género de prueba");
-
-        boolean result = dao.save(genero);
+        boolean result = dao.save(nuevo);
         assertTrue(result);
+        assertNotNull(nuevo.getId());
 
-        System.out.println("Género guardado: " + genero);
+        dao.delete(nuevo); // Limpieza
     }
 
     @Test
     void update() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
-        GeneroMusical genero = new GeneroMusical();
-
-        genero.setId(3000); // Mismo ID que en `save`
         genero.setDescripcion("Género modificado");
-
         boolean result = dao.update(genero);
         assertTrue(result);
 
-        System.out.println("Género actualizado: " + genero);
+        GeneroMusical modificado = dao.findById(genero.getId());
+        assertEquals("Género modificado", modificado.getDescripcion());
     }
 
     @Test
     void delete() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
-        GeneroMusical genero = new GeneroMusical();
+        GeneroMusical temporal = new GeneroMusical();
+        temporal.setId((int) (System.nanoTime() % 100000)); // ID único
+        temporal.setDescripcion("Eliminar género");
 
-        genero.setId(1); // Mismo ID que en `save`
-        boolean result = dao.delete(genero);
+        dao.save(temporal);
+        boolean result = dao.delete(temporal);
         assertTrue(result);
 
-        System.out.println("Género eliminado con ID: " + genero.getId());
+        GeneroMusical eliminado = dao.findById(temporal.getId());
+        assertNull(eliminado);
     }
 
     @Test
     void findById() {
-        GeneroMusicalJdbc dao = GeneroMusicalJdbcImpl.getInstance();
-        GeneroMusical genero = dao.findById(3000); // Mismo ID que en `save`
-
-        assertNotNull(genero);
-        assertEquals(3000, genero.getId());
-        assertNotNull(genero.getDescripcion());
-
-        System.out.println("Género encontrado: " + genero);
+        GeneroMusical encontrado = dao.findById(genero.getId());
+        assertNotNull(encontrado);
+        assertEquals(genero.getId(), encontrado.getId());
     }
 }

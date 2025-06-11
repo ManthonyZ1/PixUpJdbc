@@ -69,7 +69,8 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
     @Override
     public boolean save(Disquera disquera) {
         PreparedStatement preparedStatement = null;
-        String query = "INSERT INTO TBL_DISQUERA (ID, NOMBRE) VALUES (?, ?)";
+        ResultSet generatedKeys = null;
+        String query = "INSERT INTO TBL_DISQUERA (NOMBRE) VALUES (?)";
         int res = 0;
 
         try {
@@ -78,14 +79,23 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
                 return false;
             }
 
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, disquera.getId());     // ID manual
-            preparedStatement.setString(2, disquera.getNombre());
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, disquera.getNombre());
+
             res = preparedStatement.executeUpdate();
 
+            if (res == 1) {
+                generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    disquera.setId(generatedKeys.getInt(1)); // ← Aquí se guarda el ID
+                }
+            }
+
+            if (generatedKeys != null) generatedKeys.close();
             preparedStatement.close();
             closeConnection();
             return res == 1;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

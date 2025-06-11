@@ -68,28 +68,35 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
 
     @Override
     public boolean save(Artista artista) {
-
         PreparedStatement preparedStatement = null;
+        ResultSet generatedKeys = null;
         String query = "INSERT INTO TBL_ARTISTA (NOMBRE) VALUES (?)";
         int res = 0;
 
         try {
-            if (!openConnection())
-            {
+            if (!openConnection()) {
                 System.out.println("Error en conexión");
                 return false;
             }
 
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, artista.getNombre());
+
             res = preparedStatement.executeUpdate();
+
+            if (res == 1) {
+                generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    artista.setId(generatedKeys.getInt(1));
+                }
+            }
+
+            generatedKeys.close();
             preparedStatement.close();
             closeConnection();
             return res == 1;
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

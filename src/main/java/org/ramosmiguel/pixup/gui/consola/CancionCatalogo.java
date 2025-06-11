@@ -1,7 +1,9 @@
 package org.ramosmiguel.pixup.gui.consola;
 
 import org.ramosmiguel.pixup.jdbc.CancionJdbc;
+import org.ramosmiguel.pixup.jdbc.DiscoJdbc;
 import org.ramosmiguel.pixup.jdbc.impl.CancionJdbcImpl;
+import org.ramosmiguel.pixup.jdbc.impl.DiscoJdbcImpl;
 import org.ramosmiguel.pixup.model.Cancion;
 import org.ramosmiguel.pixup.util.ReadUtil;
 
@@ -33,14 +35,23 @@ public class CancionCatalogo extends Catalogos<Cancion>
 
     @Override
     public boolean processNewT(Cancion cancion) {
-        System.out.println("Titulo: ");
+        System.out.println("Título: ");
         cancion.setTitulo(ReadUtil.read());
-        System.out.println("Duracion: ");
+
+        System.out.println("Duración: ");
         cancion.setDuracion(ReadUtil.read());
-        System.out.println("ID Disco: ");
+
+        // Mostrar todos los discos antes de pedir el ID
+        System.out.println("Discos disponibles:");
+        DiscoJdbc discoDao = DiscoJdbcImpl.getInstance();
+        discoDao.findAll().forEach(System.out::println);
+
+        System.out.println("ID del Disco: ");
         cancion.setDisco_id(ReadUtil.readInt());
+
         return true;
     }
+
 
     @Override
     public void processEditT(Cancion cancion) {

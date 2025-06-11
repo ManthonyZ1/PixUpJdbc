@@ -1,6 +1,6 @@
 package org.ramosmiguel.pixup.jdbc.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.ramosmiguel.pixup.jdbc.DisqueraJdbc;
 import org.ramosmiguel.pixup.model.Disquera;
 
@@ -8,70 +8,85 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class DisqueraJdbcImplTest {
+
+    private DisqueraJdbc dao;
+    private Disquera disquera;
+
+    @BeforeEach
+    void setUp() {
+        dao = DisqueraJdbcImpl.getInstance();
+        disquera = new Disquera();
+
+        disquera.setId((int)(System.currentTimeMillis() % 100000)); // ID único temporal
+        disquera.setNombre("Disquera de prueba");
+
+        dao.save(disquera);
+    }
+
+    @AfterEach
+    void tearDown() {
+        dao.delete(disquera);
+    }
 
     @Test
     void getInstance() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
-        assertNotNull(dao);
+        assertNotNull(DisqueraJdbcImpl.getInstance());
     }
 
     @Test
     void findAll() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
         List<Disquera> disqueras = dao.findAll();
         assertNotNull(disqueras);
-        assertTrue(disqueras.size() >= 0);
-        disqueras.forEach(System.out::println);
+        assertFalse(disqueras.isEmpty());
     }
 
     @Test
     void save() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
-        Disquera disquera = new Disquera();
+        Disquera nueva = new Disquera();
+        nueva.setId((int)(System.nanoTime() % 100000));
+        nueva.setNombre("Nueva Disquera");
 
-        disquera.setId(1); // ID fijo manual
-        disquera.setNombre("Disquera Manual");
-
-        boolean result = dao.save(disquera);
+        boolean result = dao.save(nueva);
         assertTrue(result);
-        System.out.println("Disquera guardada: " + disquera);
+
+        Disquera encontrada = dao.findById(nueva.getId());
+        assertNotNull(encontrada);
+        assertEquals("Nueva Disquera", encontrada.getNombre());
+
+        dao.delete(nueva); // Limpieza
     }
 
     @Test
     void update() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
-        Disquera disquera = new Disquera();
-
-        disquera.setId(1); // Mismo ID usado en `save`
         disquera.setNombre("Disquera Actualizada");
-
         boolean result = dao.update(disquera);
         assertTrue(result);
-        System.out.println("Disquera actualizada: " + disquera);
+
+        Disquera actualizada = dao.findById(disquera.getId());
+        assertEquals("Disquera Actualizada", actualizada.getNombre());
     }
 
     @Test
     void delete() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
-        Disquera disquera = new Disquera();
+        Disquera temporal = new Disquera();
+        temporal.setId((int)(System.nanoTime() % 100000));
+        temporal.setNombre("Temporal");
 
-        disquera.setId(1); // Mismo ID usado en los tests anteriores
-
-        boolean result = dao.delete(disquera);
+        dao.save(temporal);
+        boolean result = dao.delete(temporal);
         assertTrue(result);
-        System.out.println("Disquera eliminada con ID: " + disquera.getId());
+
+        Disquera eliminada = dao.findById(temporal.getId());
+        assertNull(eliminada);
     }
 
     @Test
     void findById() {
-        DisqueraJdbc dao = DisqueraJdbcImpl.getInstance();
-        Disquera disquera = dao.findById(1); // Debe existir si `save()` ya corrió
-
-        assertNotNull(disquera, "Disquera no encontrada");
-        assertEquals(1, disquera.getId());
-        assertNotNull(disquera.getNombre());
-
-        System.out.println("Disquera encontrada: " + disquera);
+        Disquera encontrada = dao.findById(disquera.getId());
+        assertNotNull(encontrada);
+        assertEquals(disquera.getId(), encontrada.getId());
+        assertEquals(disquera.getNombre(), encontrada.getNombre());
     }
 }
