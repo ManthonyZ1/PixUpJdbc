@@ -36,13 +36,13 @@ public class DiscoCatalogo extends Catalogos<Disco> {
         disco.setTitulo(ReadUtil.read());
 
         System.out.print("Precio: ");
-        disco.setPrecio(ReadUtil.readInt());
+        disco.setPrecio(ReadUtil.readFloat());
 
         System.out.print("Existencias: ");
         disco.setExistencia(ReadUtil.readInt());
 
         System.out.print("Descuento: ");
-        disco.setDescuento(ReadUtil.readInt());
+        disco.setDescuento(ReadUtil.readFloat());
 
         System.out.print("Fecha de lanzamiento (YYYY-MM-DD): ");
         disco.setFechaLanzamiento(ReadUtil.read());
@@ -84,7 +84,7 @@ public class DiscoCatalogo extends Catalogos<Disco> {
         System.out.println("1) Título:               " + disco.getTitulo());
         System.out.println("2) Precio:               " + disco.getPrecio());
         System.out.println("3) Existencias:          " + disco.getExistencia());
-        System.out.println("4) Descuento:            " + disco.getDescuento());
+        System.out.println("4) Descuento (por ejemplo, 0.50 para 50%): " + disco.getDescuento());
         System.out.println("5) Fecha de lanzamiento: " + disco.getFechaLanzamiento());
         System.out.println("6) Editar todos los campos");
         System.out.println("7) Salir sin cambios");
@@ -101,7 +101,7 @@ public class DiscoCatalogo extends Catalogos<Disco> {
                     break;
                 case 2:
                     System.out.print("Nuevo precio: ");
-                    disco.setPrecio(ReadUtil.readInt());
+                    disco.setPrecio(ReadUtil.readFloat());
                     System.out.println("→ Precio actualizado");
                     editing = false;
                     break;
@@ -113,7 +113,7 @@ public class DiscoCatalogo extends Catalogos<Disco> {
                     break;
                 case 4:
                     System.out.print("Nuevo descuento: ");
-                    disco.setDescuento(ReadUtil.readInt());
+                    disco.setDescuento(ReadUtil.readFloat());
                     System.out.println("→ Descuento actualizado");
                     editing = false;
                     break;
@@ -127,11 +127,11 @@ public class DiscoCatalogo extends Catalogos<Disco> {
                     System.out.print("Nuevo título: ");
                     disco.setTitulo(ReadUtil.read());
                     System.out.print("Nuevo precio: ");
-                    disco.setPrecio(ReadUtil.readInt());
+                    disco.setPrecio(ReadUtil.readFloat());
                     System.out.print("Nuevas existencias: ");
                     disco.setExistencia(ReadUtil.readInt());
                     System.out.print("Nuevo descuento: ");
-                    disco.setDescuento(ReadUtil.readInt());
+                    disco.setDescuento(ReadUtil.readFloat());
                     System.out.print("Nueva fecha de lanzamiento (YYYY-MM-DD): ");
                     disco.setFechaLanzamiento(ReadUtil.read());
                     System.out.println("→ Todos los campos actualizados");

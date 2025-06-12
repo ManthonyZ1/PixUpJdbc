@@ -70,4 +70,29 @@ public class ReadUtil
         }
         return null;
     }
+    public static Float readFloat()
+    {
+        String valor=null;
+        boolean flag=true;
+        float aux=0;
+
+        while (flag)
+        {
+            valor=read();
+            if (valor!=null && !valor.isEmpty())
+            {
+                try
+                {
+                    aux=Float.valueOf(valor);
+                    return aux;
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Número inválido intente de nuevo");
+                }
+            }
+            System.out.println("Valor incorrecto, intente de nuevo");
+        }
+        return null;
+    }
 }

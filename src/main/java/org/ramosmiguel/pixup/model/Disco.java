@@ -4,9 +4,9 @@ public class Disco extends Catalogo
 {
 
     private String titulo;
-    private Integer precio;
+    private Float precio;
     private Integer existencia;
-    private Integer descuento;
+    private Float descuento;
     private String fechaLanzamiento;
     private String imagen;
     private Integer artista_id;
@@ -19,13 +19,13 @@ public class Disco extends Catalogo
     public String getTitulo() {
         return titulo;
     }
-    public Integer getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
     public Integer getExistencia() {
         return existencia;
     }
-    public Integer getDescuento() {
+    public Float getDescuento() {
         return descuento;
     }
     public String getFechaLanzamiento() {
@@ -47,13 +47,13 @@ public class Disco extends Catalogo
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    public void setPrecio(Integer precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
     public void setExistencia(Integer existencia) {
         this.existencia = existencia;
     }
-    public void setDescuento(Integer descuento) {
+    public void setDescuento(Float descuento) {
         this.descuento = descuento;
     }
     public void setFechaLanzamiento(String fechaLanzamiento) {

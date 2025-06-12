@@ -46,9 +46,9 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc {
                 disco = new Disco();
                 disco.setId(resultSet.getInt(1));
                 disco.setTitulo(resultSet.getString(2));
-                disco.setPrecio(resultSet.getInt(3));
+                disco.setPrecio(resultSet.getFloat(3));
                 disco.setExistencia(resultSet.getInt(4));
-                disco.setDescuento(resultSet.getInt(5));
+                disco.setDescuento(resultSet.getFloat(5));
                 disco.setFechaLanzamiento(resultSet.getString(6));
                 disco.setImagen(resultSet.getString(7));
                 disco.setArtista_id(resultSet.getInt(8));
@@ -195,9 +195,9 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc {
                 disco = new Disco();
                 disco.setId(resultSet.getInt(1));
                 disco.setTitulo(resultSet.getString(2));
-                disco.setPrecio(resultSet.getInt(3));
+                disco.setPrecio(resultSet.getFloat(3));
                 disco.setExistencia(resultSet.getInt(4));
-                disco.setDescuento(resultSet.getInt(5));
+                disco.setDescuento(resultSet.getFloat(5));
                 disco.setFechaLanzamiento(resultSet.getString(6));
                 disco.setImagen(resultSet.getString(7));
                 disco.setArtista_id(resultSet.getInt(8));

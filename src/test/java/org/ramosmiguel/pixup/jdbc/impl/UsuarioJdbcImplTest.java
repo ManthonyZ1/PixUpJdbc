@@ -30,7 +30,7 @@ class UsuarioJdbcImplTest {
         UsuarioJdbc dao = UsuarioJdbcImpl.getInstance();
         Usuario usuario = new Usuario();
 
-        usuario.setId(100); 
+        usuario.setId(100);
         usuario.setNombre("Mario");
         usuario.setPrimerApellido("Ramos");
         usuario.setSegundoApellido("González");

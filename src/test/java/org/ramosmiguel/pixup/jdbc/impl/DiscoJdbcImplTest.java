@@ -22,9 +22,9 @@ class DiscoJdbcImplTest {
 
         Disco disco = new Disco();
         disco.setTitulo("Disco para findAll");
-        disco.setPrecio(100);
+        disco.setPrecio(100f);
         disco.setExistencia(10);
-        disco.setDescuento(0);
+        disco.setDescuento(0.1F);
         disco.setFechaLanzamiento("2025-06-15");
         disco.setImagen("findall.jpg");
         disco.setArtista_id(1);
@@ -45,9 +45,9 @@ class DiscoJdbcImplTest {
     void save() {
         Disco nuevo = new Disco();
         nuevo.setTitulo("Nuevo Disco");
-        nuevo.setPrecio(200);
+        nuevo.setPrecio(200f);
         nuevo.setExistencia(20);
-        nuevo.setDescuento(10);
+        nuevo.setDescuento(10.1f);
         nuevo.setFechaLanzamiento("2025-06-15");
         nuevo.setImagen("nuevo.jpg");
         nuevo.setArtista_id(1);
@@ -65,9 +65,9 @@ class DiscoJdbcImplTest {
     void update() {
         Disco disco = new Disco();
         disco.setTitulo("Disco a actualizar");
-        disco.setPrecio(150);
+        disco.setPrecio(150f);
         disco.setExistencia(10);
-        disco.setDescuento(5);
+        disco.setDescuento(5.f);
         disco.setFechaLanzamiento("2025-06-01");
         disco.setImagen("actualizar.jpg");
         disco.setArtista_id(1);
@@ -78,8 +78,8 @@ class DiscoJdbcImplTest {
 
         // Actualizar valores
         disco.setTitulo("Disco Actualizado");
-        disco.setPrecio(180);
-        disco.setDescuento(8);
+        disco.setPrecio(180f);
+        disco.setDescuento(8.f);
 
         boolean actualizado = dao.update(disco);
         assertTrue(actualizado);
@@ -96,9 +96,9 @@ class DiscoJdbcImplTest {
     void delete() {
         Disco extra = new Disco();
         extra.setTitulo("Disco Temporal");
-        extra.setPrecio(120);
+        extra.setPrecio(120f);
         extra.setExistencia(5);
-        extra.setDescuento(0);
+        extra.setDescuento(0.1f);
         extra.setFechaLanzamiento("2025-06-11");
         extra.setImagen("temp.jpg");
         extra.setArtista_id(1);
@@ -117,9 +117,9 @@ class DiscoJdbcImplTest {
     void findById() {
         Disco disco = new Disco();
         disco.setTitulo("Buscar Disco");
-        disco.setPrecio(130);
+        disco.setPrecio(130f);
         disco.setExistencia(8);
-        disco.setDescuento(5);
+        disco.setDescuento(5.0f);
         disco.setFechaLanzamiento("2025-06-10");
         disco.setImagen("buscar.jpg");
         disco.setArtista_id(1);

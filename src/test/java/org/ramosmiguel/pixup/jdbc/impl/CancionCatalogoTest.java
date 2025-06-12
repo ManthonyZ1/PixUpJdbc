@@ -25,9 +25,9 @@ class CancionJdbcImplTest {
 
         Disco disco = new Disco();
         disco.setTitulo("Disco para findAll canción");
-        disco.setPrecio(100);
+        disco.setPrecio(100f);
         disco.setExistencia(5);
-        disco.setDescuento(0);
+        disco.setDescuento(0.1F);
         disco.setFechaLanzamiento("2025-06-12");
         disco.setImagen("disco_findall.jpg");
         disco.setArtista_id(1);
@@ -58,9 +58,9 @@ class CancionJdbcImplTest {
 
         Disco disco = new Disco();
         disco.setTitulo("Disco para canción");
-        disco.setPrecio(100);
+        disco.setPrecio(100f);
         disco.setExistencia(5);
-        disco.setDescuento(0);
+        disco.setDescuento(0.1F);
         disco.setFechaLanzamiento("2025-06-12");
         disco.setImagen("disco_cancion.jpg");
         disco.setArtista_id(1);
@@ -89,9 +89,9 @@ class CancionJdbcImplTest {
 
         Disco disco = new Disco();
         disco.setTitulo("Disco Update");
-        disco.setPrecio(120);
+        disco.setPrecio(120f);
         disco.setExistencia(10);
-        disco.setDescuento(2);
+        disco.setDescuento(2.2F);
         disco.setFechaLanzamiento("2025-06-12");
         disco.setImagen("update.jpg");
         disco.setArtista_id(1);
@@ -124,9 +124,9 @@ class CancionJdbcImplTest {
     void delete() {
         Disco disco = new Disco();
         disco.setTitulo("Disco para borrar");
-        disco.setPrecio(110);
+        disco.setPrecio(110f);
         disco.setExistencia(7);
-        disco.setDescuento(1);
+        disco.setDescuento(1.1F);
         disco.setFechaLanzamiento("2025-06-12");
         disco.setImagen("borrar.jpg");
         disco.setArtista_id(1);
@@ -153,9 +153,9 @@ class CancionJdbcImplTest {
     void findById() {
         Disco disco = new Disco();
         disco.setTitulo("Disco búsqueda");
-        disco.setPrecio(100);
+        disco.setPrecio(100f);
         disco.setExistencia(3);
-        disco.setDescuento(0);
+        disco.setDescuento(0.1f);
         disco.setFechaLanzamiento("2025-06-12");
         disco.setImagen("buscar.jpg");
         disco.setArtista_id(1);
