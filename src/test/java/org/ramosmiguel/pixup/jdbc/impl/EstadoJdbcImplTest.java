@@ -65,7 +65,7 @@ class EstadoJdbcImplTest
     void delete() {
         EstadoJdbc dao = EstadoJdbcImpl.getInstance();
         List<Estado> estados = dao.findAll();
-        Estado ultimo = estados.get(estados.size() - 1); // Asume que hay al menos uno
+        Estado ultimo = estados.get(estados.size() - 1);
 
         boolean result = dao.delete(ultimo);
         assertTrue(result);

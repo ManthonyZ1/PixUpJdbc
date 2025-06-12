@@ -30,7 +30,7 @@ class UsuarioJdbcImplTest {
         UsuarioJdbc dao = UsuarioJdbcImpl.getInstance();
         Usuario usuario = new Usuario();
 
-        usuario.setId(100); // Asigna un ID único que no exista
+        usuario.setId(100); 
         usuario.setNombre("Mario");
         usuario.setPrimerApellido("Ramos");
         usuario.setSegundoApellido("González");
@@ -47,7 +47,7 @@ class UsuarioJdbcImplTest {
         UsuarioJdbc dao = UsuarioJdbcImpl.getInstance();
         Usuario usuario = new Usuario();
 
-        usuario.setId(100); // Debe existir previamente (usa el mismo de `save`)
+        usuario.setId(100);
         usuario.setNombre("Mario Modificado");
         usuario.setPrimerApellido("Ramos");
         usuario.setSegundoApellido("González");
@@ -63,7 +63,7 @@ class UsuarioJdbcImplTest {
     void delete() {
         UsuarioJdbc dao = UsuarioJdbcImpl.getInstance();
         Usuario usuario = new Usuario();
-        usuario.setId(100); // Usa el mismo ID del `save` y `update`
+        usuario.setId(100);
 
         boolean result = dao.delete(usuario);
         assertTrue(result);
@@ -74,7 +74,7 @@ class UsuarioJdbcImplTest {
     void findById() {
         UsuarioJdbc dao = UsuarioJdbcImpl.getInstance();
 
-        // Asegúrate de tener un usuario con este ID en la base
+
         Usuario usuario = dao.findById(100);
 
         assertNotNull(usuario);

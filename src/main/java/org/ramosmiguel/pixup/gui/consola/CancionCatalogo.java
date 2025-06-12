@@ -41,7 +41,7 @@ public class CancionCatalogo extends Catalogos<Cancion>
         System.out.println("Duración: ");
         cancion.setDuracion(ReadUtil.read());
 
-        // Mostrar todos los discos antes de pedir el ID
+
         System.out.println("Discos disponibles:");
         DiscoJdbc discoDao = DiscoJdbcImpl.getInstance();
         discoDao.findAll().forEach(System.out::println);
@@ -72,13 +72,13 @@ public class CancionCatalogo extends Catalogos<Cancion>
                 case 1:
                     System.out.print("Nuevo título: ");
                     cancion.setTitulo(ReadUtil.read());
-                    System.out.println("→ Título actualizado a \"" + cancion.getTitulo() + "\"");
+                    System.out.println("Título actualizado a \"" + cancion.getTitulo() + "\"");
                     editing = false;
                     break;
                 case 2:
                     System.out.print("Nueva duración: ");
                     cancion.setDuracion(ReadUtil.read());
-                    System.out.println("→ Duración actualizada a \"" + cancion.getDuracion() + "\"");
+                    System.out.println("Duración actualizada a \"" + cancion.getDuracion() + "\"");
                     editing = false;
                     break;
                 case 3:

@@ -33,7 +33,7 @@ class MunicipioJdbcImplTest {
 
 
         municipio.setMunicipio("XOCHIMILCO");
-        municipio.setId_estado(1); // Asegúrate que el estado con ID 1 exista
+        municipio.setId_estado(1);
 
         boolean resultado = dao.save(municipio);
         assertTrue(resultado);
@@ -46,9 +46,9 @@ class MunicipioJdbcImplTest {
         MunicipioJdbc dao = MunicipioJdbcImpl.getInstance();
         Municipio municipio = new Municipio();
 
-        municipio.setId(2); // Asegúrate que este ID exista en la BD
+        municipio.setId(2);
         municipio.setMunicipio("IZTAPALAPA");
-        municipio.setId_estado(1); // Asegúrate que el estado 1 existe
+        municipio.setId_estado(1);
 
         boolean resultado = dao.update(municipio);
         assertTrue(resultado);
@@ -60,7 +60,7 @@ class MunicipioJdbcImplTest {
     void delete() {
         MunicipioJdbc dao = MunicipioJdbcImpl.getInstance();
         List<Municipio> municipios = dao.findAll();
-        Municipio ultimo = municipios.get(municipios.size() - 1); // Asume que hay al menos uno
+        Municipio ultimo = municipios.get(municipios.size() - 1);
 
         boolean result = dao.delete(ultimo);
         assertTrue(result);
@@ -72,7 +72,7 @@ class MunicipioJdbcImplTest {
     @Test
     void findById() {
         MunicipioJdbc dao = MunicipioJdbcImpl.getInstance();
-        Municipio municipio = dao.findById(4); // Asegúrate que este ID exista
+        Municipio municipio = dao.findById(4);
 
         assertNotNull(municipio);
         assertEquals(4, municipio.getId());

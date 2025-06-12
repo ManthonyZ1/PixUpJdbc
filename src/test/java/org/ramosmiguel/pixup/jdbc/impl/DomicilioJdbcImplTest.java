@@ -32,8 +32,8 @@ class DomicilioJdbcImplTest {
         domicilio.setCalle("Av. Reforma");
         domicilio.setNumExterior("123");
         domicilio.setNumInterior("4B");
-        domicilio.setColonia_id(4);      // debe existir
-        domicilio.setUsuario_id(100);    // debe existir
+        domicilio.setColonia_id(4);
+        domicilio.setUsuario_id(100);
 
 
         boolean res = domicilioJdbc.save(domicilio);
@@ -65,7 +65,7 @@ class DomicilioJdbcImplTest {
         DomicilioJdbc domicilioJdbc = DomicilioJdbcImpl.getInstance();
         Domicilio domicilio = new Domicilio();
 
-        domicilio.setId(3); // Asegúrate que este ID exista antes de ejecutar
+        domicilio.setId(3);
         boolean res = domicilioJdbc.delete(domicilio);
         assertTrue(res);
     }
@@ -73,7 +73,7 @@ class DomicilioJdbcImplTest {
     @Test
     void findById() {
         DomicilioJdbc domicilioJdbc = DomicilioJdbcImpl.getInstance();
-        Domicilio domicilio = domicilioJdbc.findById(1); // Asegúrate que este ID exista
+        Domicilio domicilio = domicilioJdbc.findById(1);
 
         assertNotNull(domicilio);
         assertEquals(1, domicilio.getId());

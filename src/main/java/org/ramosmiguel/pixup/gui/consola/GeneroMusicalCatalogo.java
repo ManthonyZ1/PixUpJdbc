@@ -37,9 +37,7 @@ public class GeneroMusicalCatalogo extends Catalogos<GeneroMusical> {
         return true;
     }
 
-    /**
-     * Permite elegir si editar la descripción o salir sin cambios.
-     */
+
     @Override
     public void processEditT(GeneroMusical g) {
         System.out.println("ID: " + g.getId());

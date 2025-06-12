@@ -51,9 +51,7 @@ public class ColoniaCatalogo extends Catalogos<Colonia> {
         return true;
     }
 
-    /**
-     * Permite elegir qué campo editar: nombre, CP o ambos
-     */
+
     @Override
     public void processEditT(Colonia colonia) {
         System.out.println("ID: " + colonia.getId());

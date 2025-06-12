@@ -45,14 +45,14 @@ class GeneroMusicalJdbcImplTest {
     @Test
     void save() {
         GeneroMusical nuevo = new GeneroMusical();
-        nuevo.setId((int) (System.nanoTime() % 100000)); // ID temporal aleatorio
+        nuevo.setId((int) (System.nanoTime() % 100000));
         nuevo.setDescripcion("Nuevo género");
 
         boolean result = dao.save(nuevo);
         assertTrue(result);
         assertNotNull(nuevo.getId());
 
-        dao.delete(nuevo); // Limpieza
+        dao.delete(nuevo);
     }
 
     @Test
@@ -68,7 +68,7 @@ class GeneroMusicalJdbcImplTest {
     @Test
     void delete() {
         GeneroMusical temporal = new GeneroMusical();
-        temporal.setId((int) (System.nanoTime() % 100000)); // ID único
+        temporal.setId((int) (System.nanoTime() % 100000));
         temporal.setDescripcion("Eliminar género");
 
         dao.save(temporal);

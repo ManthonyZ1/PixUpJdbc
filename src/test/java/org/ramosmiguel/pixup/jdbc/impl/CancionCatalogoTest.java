@@ -22,7 +22,7 @@ class CancionJdbcImplTest {
 
     @Test
     void findAll() {
-        // Paso 1: Insertar un disco
+
         Disco disco = new Disco();
         disco.setTitulo("Disco para findAll canción");
         disco.setPrecio(100);
@@ -35,19 +35,19 @@ class CancionJdbcImplTest {
         disco.setGeneroMusical_id(1);
         discoDao.save(disco);
 
-        // Paso 2: Insertar una canción asociada a ese disco
+
         Cancion cancion = new Cancion();
         cancion.setTitulo("Canción findAll");
         cancion.setDuracion("03:00");
         cancion.setDisco_id(disco.getId());
         cancionDao.save(cancion);
 
-        // Paso 3: Verificar findAll
+
         List<Cancion> canciones = cancionDao.findAll();
         assertNotNull(canciones);
         assertFalse(canciones.isEmpty(), "La lista no debe estar vacía");
 
-        // Limpieza
+
         cancionDao.delete(cancion);
         discoDao.delete(disco);
     }
@@ -55,7 +55,7 @@ class CancionJdbcImplTest {
 
     @Test
     void save() {
-        // Crear disco asociado
+
         Disco disco = new Disco();
         disco.setTitulo("Disco para canción");
         disco.setPrecio(100);
@@ -68,7 +68,7 @@ class CancionJdbcImplTest {
         disco.setGeneroMusical_id(1);
         discoDao.save(disco);
 
-        // Crear canción
+
         Cancion cancion = new Cancion();
         cancion.setTitulo("Luna llena");
         cancion.setDuracion("03:45");
@@ -86,7 +86,7 @@ class CancionJdbcImplTest {
 
     @Test
     void update() {
-        // Crear disco
+
         Disco disco = new Disco();
         disco.setTitulo("Disco Update");
         disco.setPrecio(120);
@@ -99,14 +99,14 @@ class CancionJdbcImplTest {
         disco.setGeneroMusical_id(1);
         discoDao.save(disco);
 
-        // Crear canción
+
         Cancion cancion = new Cancion();
         cancion.setTitulo("Estrella fugaz");
         cancion.setDuracion("03:20");
         cancion.setDisco_id(disco.getId());
         cancionDao.save(cancion);
 
-        // Actualizar
+
         cancion.setTitulo("Estrella brillante");
         cancion.setDuracion("04:10");
         boolean result = cancionDao.update(cancion);
@@ -115,7 +115,7 @@ class CancionJdbcImplTest {
         Cancion actualizada = cancionDao.findById(cancion.getId());
         assertEquals("Estrella brillante", actualizada.getTitulo());
 
-        // Limpieza
+
         cancionDao.delete(cancion);
         discoDao.delete(disco);
     }

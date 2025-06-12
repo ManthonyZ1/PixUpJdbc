@@ -34,8 +34,8 @@ class ColoniaJdbcImplTest {
         Colonia colonia = new Colonia();
 
         colonia.setNombre("COLONIA DEL VALLE");
-        colonia.setCp(31000);               // Código postal
-        colonia.setMunicipio_id(4);         // Asegúrate que este municipio exista
+        colonia.setCp(31000);
+        colonia.setMunicipio_id(4);
 
         boolean res = coloniaJdbc.save(colonia);
         assertTrue(res);
@@ -48,10 +48,10 @@ class ColoniaJdbcImplTest {
         ColoniaJdbc coloniaJdbc = ColoniaJdbcImpl.getInstance();
         Colonia colonia = new Colonia();
 
-        colonia.setId(4);                   // Asegúrate que esta colonia exista
+        colonia.setId(4);
         colonia.setNombre("COLONIA ACTUALIZADA");
         colonia.setCp(32000);
-        colonia.setMunicipio_id(4);         // El municipio también debe existir
+        colonia.setMunicipio_id(4);
 
         boolean res = coloniaJdbc.update(colonia);
         assertTrue(res);
@@ -63,7 +63,7 @@ class ColoniaJdbcImplTest {
     void delete() {
         ColoniaJdbc dao = ColoniaJdbcImpl.getInstance();
         List<Colonia> colonias = dao.findAll();
-        Colonia ultimo = colonias.get(colonias.size() - 1); // Asume que hay al menos uno
+        Colonia ultimo = colonias.get(colonias.size() - 1);
 
         boolean result = dao.delete(ultimo);
         assertTrue(result);
@@ -74,7 +74,7 @@ class ColoniaJdbcImplTest {
     @Test
     void findById() {
         ColoniaJdbc coloniaJdbc = ColoniaJdbcImpl.getInstance();
-        Colonia colonia = coloniaJdbc.findById(4); // Este ID debe existir
+        Colonia colonia = coloniaJdbc.findById(4);
 
         assertNotNull(colonia);
         assertEquals(4, colonia.getId());

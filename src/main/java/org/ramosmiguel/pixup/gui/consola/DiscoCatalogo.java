@@ -77,9 +77,7 @@ public class DiscoCatalogo extends Catalogos<Disco> {
         return true;
     }
 
-    /**
-     * Permite elegir qué campo editar o editarlos todos.
-     */
+
     @Override
     public void processEditT(Disco disco) {
         System.out.println("ID: " + disco.getId());

@@ -56,25 +56,25 @@ public class EstadoCatalogo extends Catalogos<Estado> {
     // override de add para persistir en BD
     @Override
     public void add() {
-        super.add();    // agrega a la lista en memoria (y asigna ID provisional)
-        dao.save(t);    // persiste en la BD
+        super.add();
+        dao.save(t);
     }
 
-    // override de edit para persistir cambio en BD
+
     @Override
     public void edit() {
-        super.edit();   // modifica el objeto en memoria
-        dao.update(t);  // persiste el cambio en la BD
+        super.edit();
+        dao.update(t);
     }
 
     // override de remove para borrar en BD
     @Override
     public void remove() {
-        super.remove(); // elimina de la lista en memoria
-        dao.delete(t);  // elimina de la BD
+        super.remove();
+        dao.delete(t);
     }
 
-    // override opcional: recarga siempre desde BD antes de imprimir
+
     @Override
     public void print() {
         List<Estado> actual = dao.findAll();

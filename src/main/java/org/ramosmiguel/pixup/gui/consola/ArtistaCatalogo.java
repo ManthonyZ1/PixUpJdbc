@@ -45,25 +45,19 @@ public class ArtistaCatalogo extends Catalogos<Artista> {
         artista.setNombre(ReadUtil.read());
     }
 
+
     @Override
     public void print() {
-        this.list = dao.findAll();
+        this.list = dao.findAll(); // Actualiza la lista desde la base de datos
         if (isListEmpty()) {
             System.out.println("No hay artistas registrados.");
             return;
         }
-        System.out.println("Ingrese el ID del artista a consultar:");
-        Integer id = ReadUtil.readInt();
-        Artista a = list.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-        if (a == null) {
-            System.out.println("ID inválido.");
-        } else {
-            System.out.println(a);
-        }
+
+        System.out.println("Lista de artistas registrados:");
+        list.forEach(System.out::println);
     }
+
 
     @Override
     public void add() {

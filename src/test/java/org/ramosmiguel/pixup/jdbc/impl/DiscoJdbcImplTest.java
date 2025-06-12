@@ -19,7 +19,7 @@ class DiscoJdbcImplTest {
 
     @Test
     void findAll() {
-        // Insertar disco temporal antes de consultar
+
         Disco disco = new Disco();
         disco.setTitulo("Disco para findAll");
         disco.setPrecio(100);
@@ -58,7 +58,7 @@ class DiscoJdbcImplTest {
         assertTrue(resultado);
         assertNotNull(nuevo.getId());
 
-        dao.delete(nuevo); // Limpieza
+        dao.delete(nuevo);
     }
 
     @Test
@@ -132,6 +132,6 @@ class DiscoJdbcImplTest {
         assertNotNull(encontrado);
         assertEquals("Buscar Disco", encontrado.getTitulo());
 
-        dao.delete(disco); // Limpieza
+        dao.delete(disco);
     }
 }

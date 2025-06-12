@@ -45,9 +45,7 @@ public class UsuarioCatalogo extends Catalogos<Usuario> {
         return true;
     }
 
-    /**
-     * Permite editar un campo específico, todos, o salir sin cambios.
-     */
+
     @Override
     public void processEditT(Usuario u) {
         System.out.println("\nEditando usuario ID: " + u.getId());

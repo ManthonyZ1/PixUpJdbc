@@ -19,7 +19,7 @@ class DisqueraJdbcImplTest {
         dao = DisqueraJdbcImpl.getInstance();
         disquera = new Disquera();
 
-        disquera.setId((int)(System.currentTimeMillis() % 100000)); // ID único temporal
+        disquera.setId((int)(System.currentTimeMillis() % 100000));
         disquera.setNombre("Disquera de prueba");
 
         dao.save(disquera);
@@ -55,7 +55,7 @@ class DisqueraJdbcImplTest {
         assertNotNull(encontrada);
         assertEquals("Nueva Disquera", encontrada.getNombre());
 
-        dao.delete(nueva); // Limpieza
+        dao.delete(nueva);
     }
 
     @Test
